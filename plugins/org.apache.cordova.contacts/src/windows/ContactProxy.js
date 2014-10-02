@@ -155,10 +155,10 @@ module.exports = {
                 contactStore.getContactAsync(contact.id).done(function(con) {
                     win(convertToContact(con));
                 }, function() {
-                    fail(new ContactError(ContactError.UNKNOWN_ERROR));
+                    fail(new ContactError(ContactError.PENDING_OPERATION_ERROR));
                 });
             }, function () {
-                fail(new ContactError(ContactError.UNKNOWN_ERROR));
+                fail(new ContactError(ContactError.PENDING_OPERATION_ERROR));
             });
         });
     },
@@ -168,9 +168,7 @@ module.exports = {
         // On Windows Phone 8.1 this can be implemented using native class library 
         // See Windows.Phone.PersonalInformation namespace
         // http://msdn.microsoft.com/en-us/library/windows/apps/xaml/windows.phone.personalinformation.aspx
-
-        //We don't need to create Error object here since it will be created at navigator.contacts.find() method
-        fail && fail(ContactError.NOT_SUPPORTED_ERROR);
+        fail && fail(new ContactError(ContactError.NOT_SUPPORTED_ERROR));
     },
 
     search: function (win, fail, options) {
@@ -210,10 +208,10 @@ module.exports = {
                 }
                 win(result);
             }, function() {
-                fail(new ContactError(ContactError.UNKNOWN_ERROR));
+                fail(new ContactError(ContactError.PENDING_OPERATION_ERROR));
             });
         }, function() {
-            fail(new ContactError(ContactError.UNKNOWN_ERROR));
+            fail(new ContactError(ContactError.PENDING_OPERATION_ERROR));
         });
     }
 };
